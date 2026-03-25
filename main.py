@@ -54,7 +54,7 @@ plt.show()
 X = df[[ 'reading score', 'writing score']]
 y = df['math score']
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 model = LinearRegression()
 model.fit(X_train, y_train)
