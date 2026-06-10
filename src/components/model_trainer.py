@@ -52,8 +52,102 @@ class ModelTrainer:
                 "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor()
 }
+      
+
+            params = {
+                "Linear Regression": (
+                    {
+                        "fit_intercept": [True, False]
+                    }
+                ),
+
+                "Ridge": (
+                    {
+                        "alpha": [0.01, 0.1, 1, 10, 100],
+                        "solver": ["auto", "svd", "cholesky", "lsqr"]
+                    }
+                ),
+
+                "Lasso": (
+                    {
+                        "alpha": [0.001, 0.01, 0.1, 1, 10],
+                        "max_iter":[5000,10000,20000]
+                    }
+                ),
+
+                "Decision Tree": (
+            
+                    {
+                        "criterion": ["squared_error", "absolute_error","poisson"],
+                        "splitter":["best","random"],
+                        "max_depth": [None, 5, 10, 20],
+                        "min_samples_split": [2, 5, 10],
+                        "min_samples_leaf": [1, 2, 4]
+                    }
+                ),
+
+                "Random Forest Regressor": (
+    
+                    {
+                        "n_estimators": [100, 200],
+                        "max_depth": [None, 10, 20],
+                        "min_samples_split": [2, 5],
+                        "min_samples_leaf": [1, 2]
+                    }
+                ),
+
+                "GradientBoosting": (
+                    
+                    {
+                        "n_estimators": [100, 200],
+                        "learning_rate": [0.01, 0.1],
+                        "max_depth": [3, 5]
+                    }
+                ),
+
+                "XGBRegressor": (
                 
-            model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models)
+                    {
+                        "n_estimators": [100, 200],
+                        "learning_rate": [0.01, 0.1],
+                        "max_depth": [3, 5, 7],
+                        "subsample": [0.7, 1]
+                    }
+                ),
+
+                "K-Neighbors Regressor": (
+                    
+                    {
+                        "n_neighbors": [3, 5, 7],
+                        "weights": ["uniform", "distance"],
+                        "metric": ["euclidean", "manhattan"]
+                    }
+                ),
+
+                "CatBoosting Regressor" : (
+                                        {
+                            "iterations": [100, 200, 500],
+                            "learning_rate": [0.01, 0.05, 0.1],
+                            "depth": [4, 6, 8, 10],
+                            "l2_leaf_reg": [1, 3, 5, 7],
+                            "loss_function": ["RMSE"],
+                            "verbose": [0]
+                        }
+
+                    
+                ),
+
+                "AdaBoost Regressor": (
+                     {
+                                "n_estimators": [50, 100, 200],
+                                "learning_rate": [0.01, 0.1, 1.0],
+                                "loss": ["linear", "square", "exponential"]
+                            }
+                )
+
+
+            }
+            model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models,param=params)
 
             # to get best model score from dict
             best_model_score= max(sorted(model_report.values()))
