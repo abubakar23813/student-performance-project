@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Student Performance Predictor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a202c;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-tagline {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .section-dark {
+            padding: 6rem 2rem;
+            background: #1a202c;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .section-dark .section-title {
+            color: white;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            opacity: 0.8;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .description-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .description-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .description-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .description-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #1a202c;
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            opacity: 0.7;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-python { color: #3776ab; }
+        .tech-flask { color: #009c8b; }
+        .tech-ml { color: #667eea; }
+        .tech-html { color: #e34c26; }
+        .tech-css { color: #264de4; }
+        .tech-sklearn { color: #f7931a; }
+
+        .tech-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .tech-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .developer-section {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .developer-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 4rem;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .developer-avatar {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #667eea;
+        }
+
+        .developer-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-title {
+            font-size: 1rem;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .inputs-section {
+            background: #f8f9ff;
+            padding: 4rem 2rem;
+        }
+
+        .inputs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .input-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .input-icon {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 0.8rem;
+        }
+
+        .input-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        footer {
+            background: #1a202c;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .inputs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .description-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .inputs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .developer-card {
+                padding: 2rem 3rem;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;}
+
+        .dev-name {
+            color: #000000;     
+            font-weight: bold;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #060707, #000000);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;   /* Gradient text ke liye */
+            text-shadow: 0 0 5px rgba(255, 123, 0, 0.3);
+        }
+        
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/" class="nav-logo">Student Performance Predictor</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/predictdata">Prediction</a>
+            <a href="/about">About</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="hero-title">Student Performance <span class="hero-title">Predictor</span></h1>
+        <p class="hero-tagline">AI-Powered Student Performance Prediction</p>
+        <p class="hero-subtitle">
+            Harness the power of machine learning to predict math scores with remarkable accuracy. 
+            Our intelligent system analyzes multiple educational factors to provide insightful predictions.
+        </p>
+        <a href="/predictdata" class="btn-primary">Start Prediction <i class="fas fa-arrow-right"></i></a>
+    </section>
+
+    <section class="section">
+        <div class="content-container">
+            <h2 class="section-title">What We Do</h2>
+            <p class="section-subtitle">
+                Empowering educators and students with AI-driven insights for better academic outcomes
+            </p>
+
+            <div class="description-grid">
+                <div class="description-card">
+                    <h3>🎯 Predictive Analytics</h3>
+                    <p>
+                        Our application uses advanced machine learning algorithms to predict student math scores 
+                        based on comprehensive educational data. By analyzing multiple factors simultaneously, 
+                        we deliver accurate and reliable predictions that help identify learning patterns.
+                    </p>
+                </div>
+                <div class="description-card">
+                    <h3>🤖 Machine Learning Power</h3>
+                    <p>
+                        Built with Scikit-learn, our ML model processes complex educational relationships 
+                        to generate predictions. The algorithm learns from real data patterns, continuously 
+                        improving accuracy and providing actionable insights for academic improvement.
+                    </p>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 4rem;">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Accurate Predictions</h3>
+                    <p class="feature-desc">
+                        Advanced ML algorithms deliver highly accurate math score predictions with proven reliability
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h3 class="feature-title">User-Friendly Interface</h3>
+                    <p class="feature-desc">
+                        Clean, intuitive design makes prediction simple for everyone - no technical expertise needed
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Fast Results</h3>
+                    <p class="feature-desc">
+                        Instant predictions delivered in seconds, saving time for educators and students alike
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="feature-title">Real Data Driven</h3>
+                    <p class="feature-desc">
+                        Models trained on authentic educational datasets ensuring practical, actionable insights
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="inputs-section">
+        <div class="content-container">
+            <h2 class="section-title">Input Parameters</h2>
+            <p class="section-subtitle">
+                Our model analyzes these key educational factors for comprehensive predictions
+            </p>
+            <div class="inputs-grid">
+                <div class="input-item">
+                    <div class="input-icon">
+                        <i class="fas fa-venus-mars"></i>
+                    </div>
+                    <div class="input-name">Gender</div>
+                </div>
+                <div class="input-item">
+                    <div class="input-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="input-name">Race/Ethnicity</div>
+                </div>
+                <div class="input-item">
+                    <div class="input-icon">
+                        <i class="fas fa Graduation-cap"></i>
+                    </div>
+                    <div class="input-name">Parental Education</div>
+                </div>
+                <div class="input-item">
+                    <div class="input-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="input-name">Lunch Type</div>
+                </div>
+                <div class="input-item">
+                    <div class="input-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <div class="input-name">Test Preparation</div>
+                </div>
+                <div class="input-item">
+                    <div class="input-icon">
+                        <i class="fas fa-list-ul"></i>
+                    </div>
+                    <div class="input-name">Reading Score</div>
+                </div>
+                <div class="input-item">
+                    <div class="input-icon">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <div class="input-name">Writing Score</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-dark">
+        <div class="content-container">
+            <h2 class="section-title">Technology Stack</h2>
+            <p class="section-subtitle">
+                Built with cutting-edge technologies for performance and reliability
+            </p>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon tech-python">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="tech-name">Python</h3>
+                    <p class="tech-desc">Powerful programming language for ML and data science</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon tech-flask">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="tech-name">Flask</h3>
+                    <p class="tech-desc">Lightweight web framework for robust backend</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon tech-ml">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="tech-name">Scikit-learn</h3>
+                    <p class="tech-desc">Advanced machine learning library for predictions</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon tech-html">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="tech-name">HTML5</h3>
+                    <p class="tech-desc">Modern structure for responsive web pages</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon tech-css">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="tech-name">CSS3</h3>
+                    <p class="tech-desc">Beautiful styling with gradients and animations</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon tech-sklearn">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="tech-name">ML Models</h3>
+                    <p class="tech-desc">Predictive algorithms for accurate scoring</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="content-container">
+            <h2 class="section-title">Meet the Developer</h2>
+            <div class="developer-section">
+                <div class="developer-card">
+                    <div class="developer-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="developer-name">Developer</h3>
+                    <p class="developer-title">Developed by a passionate Data Science learner  <span class="dev-name">ARHAM QURAISHI</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Student Performance Predictor. All rights reserved.</p>
+        <p>AI-Powered Student Performance Prediction</p>
+    </footer>
+</body>
+</html>

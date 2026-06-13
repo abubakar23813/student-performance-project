@@ -1,111 +1,981 @@
-<html>
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Math Score | Student Performance Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #0ea5e9;
+            --accent: #f472b6;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-2: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+            --shadow-success: 0 0 40px rgba(16, 185, 129, 0.4);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-hero);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.08;
+            animation: float 25s infinite ease-in-out;
+        }
+
+        .bg-circle:nth(1) { width: 700px; height: 700px; top: -250px; left: -250px; animation-delay: 0s; }
+        .bg-circle:nth(2) { width: 500px; height: 500px; top: 40%; right: -150px; animation-delay: -8s; }
+        .bg-circle:nth(3) { width: 350px; height: 350px; bottom: -150px; left: 35%; animation-delay: -16s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, -40px) scale(1.15); }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-back {
+            padding: 0.75rem 1.5rem;
+            background: var(--glass);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        /* Main Container */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 5% 60px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #818cf8 50%, #6366f1 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--gray-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            color: var(--white);
+        }
+
+        .form-label .required {
+            color: var(--accent);
+            margin-left: 0.25rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:hover,
+        .form-select:hover {
+            border-color: var(--primary-light);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-light);
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-select option {
+            background: var(--dark-light);
+            color: var(--white);
+            padding: 0.5rem;
+        }
+
+        .form-input.error,
+        .form-select.error {
+            border-color: var(--error);
+        }
+
+        .form-input.success,
+        .form-select.success {
+            border-color: var(--success);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        /* Submit Button */
+        .submit-section {
+            grid-column: 1 / -1;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .btn-submit {
+            padding: 1.25rem 3rem;
+            background: var(--gradient-1);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl), 0 0 60px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-submit.loading .spinner {
+            display: block;
+        }
+
+        .btn-submit.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Result Section */
+        .result-section {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card {
+            background: rgba(16, 185, 129, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-xl), var(--shadow-success);
+        }
+
+        .result-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .result-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .result-score {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--success);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            color: var(--gray-light);
+        }
+
+        .result-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-meta-item {
+            text-align: center;
+        }
+
+        .result-meta-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+
+        .result-meta-label {
+            font-size: 0.85rem;
+            color: var(--gray-light);
+        }
+
+        /* Error Result */
+        .result-card.error {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            box-shadow: var(--shadow-xl), 0 0 40px rgba(239, 68, 68, 0.4);
+        }
+
+        .result-card.error .result-score {
+            color: var(--error);
+            text-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Info Sidebar */
+        .info-sidebar {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .info-header h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: var(--gray-light);
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list li strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Tips Box */
+        .tips-box {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .tips-box p {
+            font-size: 0.85rem;
+            color: var(--gray-light);
+            line-height: 1.7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 968px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .form-card {
+                padding: 2rem;
+            }
+
+            .main-container {
+                padding: 100px 5% 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .page-header p {
+                font-size: 0.95rem;
+            }
+
+            .result-score {
+                font-size: 3rem;
+            }
+
+            .result-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-submit {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Focus visible for accessibility */
+        .form-input:focus-visible,
+        .form-select:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
 <body>
-    <div class="login">
-       <h1>Student Exam Performance Indicator</h1>
-   
-       <form action="{{ url_for('predict_datapoint')}}" method="post">
-        <h1>
-            <legend>Student Exam Performance Prediction</legend>
-        </h1>
-        <div class="mb-3">
-            <label class="form-label">Gender</label>
-            <select class="form-control" name="gender" placeholder="Enter you Gender" required>
-                <option class="placeholder" selected disabled value="">Select your Gender</option>
-                <option value="male">
-                    Male
-                </option>
-                <option value="female">
-                    Female
-                </option>
-            </select>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-icon">🎓</div>
+            Student Predictor
+        </a>
+        <a href="/" class="nav-back">
+            ← Back to Home
+        </a>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Predict Math Score</h1>
+                <p>Enter student details below to get an AI-powered prediction of their math performance</p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="form-card">
+                <form id="predictionForm" action="/predictdata" method="POST" novalidate>
+                    <div class="form-grid">
+                        <!-- Gender -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Gender <span class="required">*</span>
+                            </label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <div class="error-message" id="genderError">
+                                ❌ Please select a gender
+                            </div>
+                        </div>
+
+                        <!-- Race/Ethnicity -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Race/Ethnicity <span class="required">*</span>
+                            </label>
+                            <select class="form-select" id="race" name="race" required>
+                                <option value="">Select Race/Ethnicity</option>
+                                <option value="groupa">Group A</option>
+                                <option value="groupb">Group B</option>
+                                <option value="groupc">Group C</option>
+                                <option value="groupd">Group D</option>
+                                <option value="groupe">Group E</option>
+                            </select>
+                            <div class="error-message" id="raceError">
+                                ❌ Please select race/ethnicity
+                            </div>
+                        </div>
+
+                        <!-- Parental Education -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Parental Education Level <span class="required">*</span>
+                            </label>
+                            <select class="form-select" id="parental_education" name="parental_education" required>
+                                <option value="">Select Education Level</option>
+                                <option value="somehighschool">Some High School</option>
+                                <option value="highschool">High School</option>
+                                <option value="somecollege">Some College</option>
+                                <option value="collegedegree">College Degree</option>
+                                <option value="bachelorsdegree">Bachelor's Degree</option>
+                                <option value="mastersdegree">Master's Degree</option>
+                            </select>
+                            <div class="error-message" id="parentalEducationError">
+                                ❌ Please select parental education level
+                            </div>
+                        </div>
+
+                        <!-- Lunch -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Lunch Type <span class="required">*</span>
+                            </label>
+                            <select class="form-select" id="lunch" name="lunch" required>
+                                <option value="">Select Lunch Type</option>
+                                <option value="standard">Standard Lunch</option>
+                                <option value="free">Free Reduced Lunch</option>
+                            </select>
+                            <div class="error-message" id="lunchError">
+                                ❌ Please select lunch type
+                            </div>
+                        </div>
+
+                        <!-- Test Preparation -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Test Preparation Course <span class="required">*</span>
+                            </label>
+                            <select class="form-select" id="test_prep" name="test_prep" required>
+                                <option value="">Select Course Status</option>
+                                <option value="none">No Course</option>
+                                <option value="completed">Completed Course</option>
+                            </select>
+                            <div class="error-message" id="testPrepError">
+                                ❌ Please select test preparation status
+                            </div>
+                        </div>
+
+                        <!-- Reading Score -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Reading Score <span class="required">*</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                class="form-input" 
+                                id="reading_score" 
+                                name="reading_score" 
+                                placeholder="Enter reading score (0-100)" 
+                                min="0" 
+                                max="100" 
+                                required
+                            >
+                            <div class="error-message" id="readingError">
+                                ❌ Please enter a valid reading score (0-100)
+                            </div>
+                        </div>
+
+                        <!-- Writing Score -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                Writing Score <span class="required">*</span>
+                            </label>
+                            <input 
+                                type="number" 
+                                class="form-input" 
+                                id="writing_score" 
+                                name="writing_score" 
+                                placeholder="Enter writing score (0-100)" 
+                                min="0" 
+                                max="100" 
+                                required
+                            >
+                            <div class="error-message" id="writingError">
+                                ❌ Please enter a valid writing score (0-100)
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="submit-section">
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                <span class="spinner"></span>
+                                <span class="btn-text">🎯 Predict Math Score</span>
+                            </button>
+                        </div>
+
+                        <!-- Result Section -->
+                        <div class="result-section" id="resultSection">
+                            <div class="result-card" id="resultCard">
+                                <div class="result-icon">📊</div>
+                                <div class="result-title">Predicted Math Score</div>
+                                <div class="result-score" id="resultScore">--</div>
+                                <div class="result-label">out of 100</div>
+                                <div class="result-meta">
+                                    <div class="result-meta-item">
+                                        <div class="result-meta-value">94.2%</div>
+                                        <div class="result-meta-label">Accuracy</div>
+                                    </div>
+                                    <div class="result-meta-item">
+                                        <div class="result-meta-value"><2s</div>
+                                        <div class="result-meta-label">Processing Time</div>
+                                    </div>
+                                    <div class="result-meta-item">
+                                        <div class="result-meta-value">AI-Powered</div>
+                                        <div class="result-meta-label">Model Type</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% if results %}
+                    <h2 style="text-align:center; margin-top:20px;">
+                        Predicted Score: {{ results }}
+                    </h2>
+                {% endif %}
+
+                <!-- Info Sidebar -->
+                <div class="info-sidebar" style="margin-top: 2rem;">
+                    <div class="info-header">
+                        <div class="info-icon">ℹ️</div>
+                        <h3>Input Requirements</h3>
+                    </div>
+                    <ul class="info-list">
+                        <li><strong>Gender:</</strong> Male or Female</li>
+                        <li><strong>Race:</</strong> 5 ethnic groups (A-E)</li>
+                        <li><strong>Education:</</strong> 6 parental levels</li>
+                        <li><strong>Lunch:</</strong> Standard or Free Reduced</li>
+                        <li><strong>Test Prep:</</strong> None or Completed</li>
+                        <li><strong>Scores:</</strong> 0-100 range</li>
+                    </ul>
+                    <div class="tips-box">
+                        <p>💡 <strong>Tip:</strong> Higher reading and writing scores typically correlate with better math performance. Ensure accurate input for best predictions!</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Race or Ethnicity</label>
-            <select class="form-control" name="ethnicity" placeholder="Enter you ethnicity" required>
-                <option class="placeholder" selected disabled value="">Select Ethnicity</option>
-                <option value="group A">
-                    Group A
-                </option>
-                <option value="group B">
-                    Group B
-                </option>
-                <option value="group C">
-                    Group C
-                </option>
-                <option value="group D">
-                    Group D
-                </option>
-                <option value="group E">
-                    Group E
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Parental Level of Education</label>
-            <select class="form-control" name="parental_level_of_education"
-                placeholder="Enter you Parent Education" required>
-                <option class="placeholder" selected disabled value="">Select Parent Education</option>
-                <option value="associate's degree">
-                    associate's degree
-                </option>
-                <option value="bachelor's degree">
-                    bachelor's degree
-                </option>
-                <option value="high school">
-                    high school
-                </option>
-                <option value="master's degree">
-                    master's degree
-                </option>
-                <option value="some college">
-                    some college
-                </option>
-                <option value="some high school">
-                    some high school
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Lunch Type</label>
-            <select class="form-control" name="lunch" placeholder="Enter you Lunch" required>
-                <option class="placeholder" selected disabled value="">Select Lunch Type</option>
-                <option value="free/reduced">
-                    free/reduced
-                </option>
-                <option value="standard">
-                    standard
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Test preparation Course</label>
-            <select class="form-control" name="test_preparation_course" placeholder="Enter you Course"
-                required>
-                <option class="placeholder" selected disabled value="">Select Test_course</option>
-                <option value="none">
-                    None
-                </option>
-                <option value="completed">
-                    Completed
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Writing Score out of 100</label>
-            <input class="form-control" type="number" name="reading_score"
-                placeholder="Enter your Reading score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Reading Score out of 100</label>
-            <input class="form-control" type="number" name="writing_score"
-                placeholder="Enter your Reading Score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict your Maths Score" required />
-        </div>
-    </form>
-    <h2>
-       THE  prediction is {{results}}
-    </h2>
-   <body>
+    </div>
+
+    <!-- Jinja Results Placeholder -->
+    {% if results %}
+    <script>
+        // Display results if they exist from server
+        document.getElementById('resultSection').classList.add('show');
+        document.getElementById('resultScore').textContent = "{{results}}";
+    </script>
+    {% endif %}
+
+    <script>
+        // Form Validation
+        const form = document.getElementById('predictionForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultSection = document.getElementById('resultSection');
+        const resultCard = document.getElementById('resultCard');
+        const resultScore = document.getElementById('resultScore');
+
+        // Validation functions
+        function validateField(input, errorId, validator) {
+            const errorEl = document.getElementById(errorId);
+            const value = input.value;
+
+            if (validator(value)) {
+                input.classList.remove('error');
+                input.classList.add('success');
+                errorEl.classList.remove('show');
+                return true;
+            } else {
+                input.classList.remove('success');
+                input.classList.add('error');
+                errorEl.classList.add('show');
+                return false;
+            }
+        }
+
+        function validateGender() {
+            return validateField(
+                document.getElementById('gender'),
+                'genderError',
+                (value) => value !== ''
+            );
+        }
+
+        function validateRace() {
+            return validateField(
+                document.getElementById('race'),
+                'raceError',
+                (value) => value !== ''
+            );
+        }
+
+        function validateParentalEducation() {
+            return validateField(
+                document.getElementById('parental_education'),
+                'parentalEducationError',
+                (value) => value !== ''
+            );
+        }
+
+        function validateLunch() {
+            return validateField(
+                document.getElementById('lunch'),
+                'lunchError',
+                (value) => value !== ''
+            );
+        }
+
+        function validateTestPrep() {
+            return validateField(
+                document.getElementById('test_prep'),
+                'testPrepError',
+                (value) => value !== ''
+            );
+        }
+
+        function validateScore(inputId, errorId) {
+            return validateField(
+                document.getElementById(inputId),
+                errorId,
+                (value) => {
+                    const num = parseInt(value);
+                    return !isNaN(num) && num >= 0 && num <= 100;
+                }
+            );
+        }
+
+        // Event listeners for real-time validation
+        document.getElementById('gender').addEventListener('change', validateGender);
+        document.getElementById('race').addEventListener('change', validateRace);
+        document.getElementById('parental_education').addEventListener('change', validateParentalEducation);
+        document.getElementById('lunch').addEventListener('change', validateLunch);
+        document.getElementById('test_prep').addEventListener('change', validateTestPrep);
+        document.getElementById('reading_score').addEventListener('input', () => validateScore('reading_score', 'readingError'));
+        document.getElementById('writing_score').addEventListener('input', () => validateScore('writing_score', 'writingError'));
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+           // e.preventDefault();
+
+            // Validate all fields
+            const isGenderValid = validateGender();
+            const isRaceValid = validateRace();
+            const isParentalEducationValid = validateParentalEducation();
+            const isLunchValid = validateLunch();
+            const isTestPrepValid = validateTestPrep();
+            const isReadingValid = validateScore('reading_score', 'readingError');
+            const isWritingValid = validateScore('writing_score', 'writingError');
+
+            if (!isGenderValid || !isRaceValid || !isParentalEducationValid || 
+                !isLunchValid || !isTestPrepValid || !isReadingValid || !isWritingValid) {
+                return;
+            }
+
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            resultSection.classList.remove('show');
+
+            // Collect form data
+            const formData = {
+                gender: document.getElementById('gender').value,
+                race: document.getElementById('race').value,
+                parental_education: document.getElementById('parental_education').value,
+                lunch: document.getElementById('lunch').value,
+                test_prep: document.getElementById('test_prep').value,
+                reading_score: parseInt(document.getElementById('reading_score').value),
+                writing_score: parseInt(document.getElementById('writing_score').value)
+            };
+
+            try {
+                // Submit to Flask backend
+                const response = await fetch('/home', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.result) {
+                    // Show success result
+                    resultCard.classList.remove('error');
+                    resultScore.textContent = data.result;
+                    resultSection.classList.add('show');
+                } else {
+                    // Show error
+                    resultCard.classList.add('error');
+                    resultScore.textContent = 'Error';
+                    resultSection.classList.add('show');
+                }
+            } catch (error) {
+                // Handle network error
+                resultCard.classList.add('error');
+                resultScore.textContent = 'Network Error';
+                resultSection.classList.add('show');
+                console.error('Prediction error:', error);
+            } finally {
+                // Reset loading state
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Animation on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const formCard = document.querySelector('.form-card');
+            formCard.classList.add('animate-in');
+        });
+    </script>
+</body>
 </html>

@@ -59,9 +59,16 @@ def predict_datapoint():
     except Exception as e:
         print("FULL ERROR:", e)
         return f"ERROR: {str(e)}"
+    
+    
+    """route for about page"""
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
         
     
 
 if __name__=="__main__":
-    app.run(debug=True)   
+    print("running app")
+    app.run(port=5000,debug=True,use_reloader=False)   
