@@ -23,7 +23,7 @@ def get_requirements(file_path:str)->List[str]:
         name="STUDENT-PROJECT",
         version="0.0.1",
         author="Quraishi",
-        author_email="akqadri812@gmail.com",
+        author_email="arhamq.code@gmail.com",
         packages=find_packages(),
         install_requires=get_requirements("requirements.txt")
         )
